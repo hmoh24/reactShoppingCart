@@ -1,50 +1,42 @@
-#home{
+.home {
   flex: 1;
 }
 
-#home>section{
+.home > section {
   padding: 40px 50px;
 }
 
-#hero {
+.hero {
   background-image: url(../../assets/alex-folguera-9EfG4t9vfvc-unsplash.jpg);
   background-size: cover;
   min-height: 90vh;
 }
 
-#hero>h1{
+.heroTitle {
+  color: var(--color-secondary);
+  font-family: "Forum", serif;
+  font-size: 100px;
+}
+
+.heroText {
   color: var(--color-secondary);
 }
 
-#hero>p{
-  color: var(--color-secondary);
-}
-
-#about {
+.about {
   background: var(--color-secondary);
 }
 
-#popular {
-    background: var(--color-muted);
+.popular {
+  background: var(--color-muted);
 }
 
-section>h2 {
+.sectionTitle {
   margin-bottom: 24px;
-}
-
-h1, h2 {
   font-family: "Forum", serif;
   color: var(--color-primary);
-}
-
-h1{
-    font-size: 100px;
-}
-
-h2 {
   font-size: 40px;
 }
 
-p {
+.contentText {
   color: var(--color-primary);
 }

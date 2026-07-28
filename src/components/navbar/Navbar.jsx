@@ -1,18 +1,25 @@
 import styles from "./Navbar.module.css";
+import { NavLink } from "react-router";
 
 function Navbar() {
   return (
-    <nav role="navigation">
+    <nav className={styles.navbar} role="navigation">
       <p>Logo</p>
-      <ul class={styles.navLinks}>
+      <ul className={styles.navLinks}>
         <li>
-          <a href="">Link 1</a>
+          <NavLink to="/" end>
+            Home
+          </NavLink>
         </li>
         <li>
-          <a href="">Link 2</a>
+          <NavLink to="/products" end>
+            Products
+          </NavLink>
         </li>
         <li>
-          <a href="">Link 3</a>
+          <NavLink to="/cart" end>
+            Cart
+          </NavLink>
         </li>
       </ul>
     </nav>

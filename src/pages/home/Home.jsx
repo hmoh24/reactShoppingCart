@@ -2,16 +2,18 @@ import styles from "./Home.module.css";
 
 function Home() {
   return (
-    <main id={styles.home}>
-      <section id={styles.hero}>
-        <h1>Sterling Sculptures</h1>
-        <p>The world's leading ancient art broker</p>
+    <main className={styles.home}>
+      <section className={styles.hero}>
+        <h1 className={styles.heroTitle}>Sterling Sculptures</h1>
+        <p className={styles.heroText}>
+          The world's leading ancient art broker
+        </p>
         <button type="button">Gallery</button>
       </section>
-      <section id={styles.about}>
-        <h2>About</h2>
-        <div class={styles.placeholder}>
-          <p>
+      <section className={styles.about}>
+        <h2 className={styles.sectionTitle}>About</h2>
+        <div className={styles.placeholder}>
+          <p className={styles.contentText}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A tempora
             facilis possimus harum id deserunt amet aut illo, corrupti
             praesentium minus consequatur labore quod saepe temporibus
@@ -40,10 +42,10 @@ function Home() {
           </p>
         </div>
       </section>
-      <section id={styles.popular}>
-        <h2>Most Popular pieces</h2>
-        <div class={styles.placeholder}>
-          <p>
+      <section className={styles.popular}>
+        <h2 className={styles.sectionTitle}>Most Popular pieces</h2>
+        <div className={styles.placeholder}>
+          <p className={styles.contentText}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. A tempora
             facilis possimus harum id deserunt amet aut illo, corrupti
             praesentium minus consequatur labore quod saepe temporibus

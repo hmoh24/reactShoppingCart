@@ -1,0 +1,11 @@
+import styles from "./Cart.module.css";
+
+function Cart() {
+  return (
+    <>
+      <p>cart</p>
+    </>
+  );
+}
+
+export default Cart;
