@@ -1,0 +1,15 @@
+:root {
+  --color-primary: #111318;
+  /* dark ink / near-black */
+  --color-secondary: #f2efe8;
+  /* warm ivory */
+  --color-accent: #b5965a;
+  /* antique gold */
+
+  --color-muted: #d8d2c7;
+  /* stone / soft beige-grey */
+  --color-highlight: #a9bbc6;
+  /* dusty pastel blue */
+  --color-highlight-dark: #526875;
+  /* deep slate blue */
+}
