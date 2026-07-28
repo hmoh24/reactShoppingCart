@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "./App.css";
-import Home from "./Home";
+import Home from "./components/home/Home";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
     <>
-      <p>Sculptures for sale!</p>
+      <Navbar />
       <Home />
     </>
   );
