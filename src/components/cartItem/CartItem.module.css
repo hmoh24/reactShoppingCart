@@ -1,0 +1,20 @@
+.cartItem{
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+}
+
+.cartItemDetails{
+  display: flex;
+  column-gap: 8px;
+}
+
+.cartItemImg{
+  width: 20%;
+  background-color: black;
+  aspect-ratio: 1/1;
+}
+
+.cartItemText{
+  display: flex;
+  flex-direction: column;
+}
