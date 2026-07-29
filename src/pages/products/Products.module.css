@@ -1,0 +1,15 @@
+.productsPage{
+  display: flex;
+  flex-direction: column;
+  padding: 40px 50px;
+
+}
+
+.productCardGrid {
+  background-color: var(--color-muted);
+  display: grid;
+  gap: 80px;
+  padding: 10px 10px;
+  grid-template-columns: repeat(4, 1fr);
+  height: auto;
+}

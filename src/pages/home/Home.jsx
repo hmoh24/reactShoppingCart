@@ -2,7 +2,7 @@ import styles from "./Home.module.css";
 
 function Home() {
   return (
-    <main className={styles.home}>
+    <main className={styles.homePage}>
       <section className={styles.hero}>
         <h1 className={styles.heroTitle}>Sterling Sculptures</h1>
         <p className={styles.heroText}>

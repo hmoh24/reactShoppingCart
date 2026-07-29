@@ -1,8 +1,8 @@
-.home {
+.homePage {
   flex: 1;
 }
 
-.home > section {
+.homePage > section {
   padding: 40px 50px;
 }
 
@@ -14,8 +14,6 @@
 
 .heroTitle {
   color: var(--color-secondary);
-  font-family: "Forum", serif;
-  font-size: 100px;
 }
 
 .heroText {
@@ -32,9 +30,7 @@
 
 .sectionTitle {
   margin-bottom: 24px;
-  font-family: "Forum", serif;
   color: var(--color-primary);
-  font-size: 40px;
 }
 
 .contentText {

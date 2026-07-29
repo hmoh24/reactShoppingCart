@@ -1,0 +1,17 @@
+.productCard {
+  background-color: var(--color-secondary);
+  padding: 10px;
+  display: grid;
+  gap: 8px;
+}
+
+.productCardImg {
+  background-color: black;
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+
+.productBottom{
+  display: flex;
+  justify-content: space-between
+}

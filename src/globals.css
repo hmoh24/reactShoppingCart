@@ -12,4 +12,55 @@
   /* dusty pastel blue */
   --color-highlight-dark: #526875;
   /* deep slate blue */
+
+  --font-body: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --font-heading: "Palatino Linotype", "Book Antiqua", Georgia, serif;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-primary);
+}
+
+p,
+li,
+span,
+a,
+button,
+label,
+input,
+textarea,
+select {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--color-primary);
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.25rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.25rem;
 }
