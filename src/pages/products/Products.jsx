@@ -1,16 +1,29 @@
 import styles from "./Products.module.css";
 import ProductCard from "../../components/productCard/ProductCard";
+import { useLoaderData } from "react-router";
 
 function Products() {
-  const placeholderArray = new Array(16).fill(0);
-  console.log(placeholderArray);
+  const { productsFetch } = useLoaderData();
+
+  const buildImageURL = (identifier) => {
+    return `${productsFetch.config.iiif_url}/${identifier}/full/843,/0/default.jpg`;
+  };
 
   return (
     <main className={styles.productsPage}>
       <h1>Products</h1>
       <section className={styles.productCardGrid}>
-        {placeholderArray.map((arrayItem) => {
-          return <ProductCard />;
+        {productsFetch.data.map((arrayItem) => {
+          return (
+            <ProductCard
+              key={arrayItem.id}
+              cardInfo={{
+                title: arrayItem.title,
+                description: arrayItem.description,
+                imageURL: buildImageURL(arrayItem.image_id),
+              }}
+            />
+          );
         })}
       </section>
       <div className={styles.pageButtons}>

@@ -4,6 +4,7 @@ import Products from "./pages/products/Products";
 import Home from "./pages/home/Home";
 import Cart from "./pages/cart/Cart";
 import App from "./App";
+import productsLoader from "./pages/products/productsLoader";
 
 export const router = createBrowserRouter([
   {
@@ -11,7 +12,13 @@ export const router = createBrowserRouter([
     Component: App,
     children: [
       { index: true, Component: Home },
-      { path: "products", Component: Products },
+      {
+        path: "products",
+        loader: async () => {
+          return { productsFetch: await productsLoader() };
+        },
+        Component: Products,
+      },
       { path: "cart", Component: Cart },
     ],
   },

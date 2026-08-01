@@ -1,15 +1,12 @@
 import styles from "./ProductCard.module.css";
+import stripHtml from "../../util/stripHTML";
 
-function ProductCard() {
+function ProductCard({ cardInfo }) {
   return (
     <div className={styles.productCard}>
-      <h2>Product Name</h2>
-      <img src="" alt="" className={styles.productCardImg} />
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nisi
-        consequuntur reiciendis maxime impedit iste! Iste id quo nihil veniam in
-        provident soluta ipsa nulla aperiam!
-      </p>
+      <h2>{cardInfo.title}</h2>
+      <img src={cardInfo.imageURL} alt="" className={styles.productCardImg} />
+      <p>{stripHtml(cardInfo.description)}</p>
       <div className={styles.productBottom}>
         <input type="text" placeholder="0" />
         <button>Add to Cart</button>
