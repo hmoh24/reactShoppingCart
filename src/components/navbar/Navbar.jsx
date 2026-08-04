@@ -1,7 +1,7 @@
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router";
 
-function Navbar() {
+function Navbar({ cartItemAmount }) {
   return (
     <nav className={styles.navbar} role="navigation">
       <p>Logo</p>
@@ -20,6 +20,9 @@ function Navbar() {
           <NavLink to="/cart" end>
             Cart
           </NavLink>
+        </li>
+        <li>
+          <ul>Cart Items: {cartItemAmount}</ul>
         </li>
       </ul>
     </nav>

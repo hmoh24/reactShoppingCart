@@ -1,7 +1,7 @@
 import styles from "./ProductCard.module.css";
 import stripHtml from "../../util/stripHTML";
 
-function ProductCard({ cardInfo }) {
+function ProductCard({ cardInfo, addToCart }) {
   return (
     <div className={styles.productCard}>
       <h2>{cardInfo.title}</h2>
@@ -9,7 +9,13 @@ function ProductCard({ cardInfo }) {
       <p>{stripHtml(cardInfo.description)}</p>
       <div className={styles.productBottom}>
         <input type="text" placeholder="0" />
-        <button>Add to Cart</button>
+        <button
+          onClick={() => {
+            addToCart();
+          }}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

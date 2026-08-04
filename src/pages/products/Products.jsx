@@ -1,11 +1,11 @@
 import styles from "./Products.module.css";
 import ProductCard from "../../components/productCard/ProductCard";
-import { useLoaderData, useParams, Link } from "react-router";
+import { useLoaderData, useParams, Link, useOutletContext } from "react-router";
 
 function Products() {
   const params = useParams();
   const { productsFetch } = useLoaderData();
-  console.log(productsFetch);
+  const [cartItems, setCartItems] = useOutletContext();
 
   return (
     <main className={styles.productsPage}>
@@ -20,6 +20,11 @@ function Products() {
                 description: arrayItem.period,
                 imageURL: arrayItem.primaryImage,
               }}
+              addToCart={() =>
+                setCartItems((prev) => {
+                  return [...prev, arrayItem];
+                })
+              }
             />
           );
         })}

@@ -7,10 +7,11 @@ import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
   return (
     <>
-      <Navbar />
-      <Outlet />
+      <Navbar cartItemAmount={cartItems.length} />
+      <Outlet context={[cartItems, setCartItems]} />
       <Footer />
     </>
   );
