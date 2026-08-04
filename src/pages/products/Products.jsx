@@ -1,8 +1,9 @@
 import styles from "./Products.module.css";
 import ProductCard from "../../components/productCard/ProductCard";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useParams, Link } from "react-router";
 
 function Products() {
+  const params = useParams();
   const { productsFetch } = useLoaderData();
   console.log(productsFetch);
 
@@ -24,7 +25,20 @@ function Products() {
         })}
       </section>
       <div className={styles.pageButtons}>
-        <button type="button">Next</button>
+        <li>
+          <Link
+            to={`/products/${Number(params.pageNumber) - 1 > 0 ? Number(params.pageNumber) - 1 : 1}`}
+          >
+            Next
+          </Link>
+        </li>
+        <li>
+          <Link
+            to={`/products/${Number(params.pageNumber) + 1 < 13 ? Number(params.pageNumber) + 1 : 12}`}
+          >
+            Next
+          </Link>
+        </li>
       </div>
     </main>
   );

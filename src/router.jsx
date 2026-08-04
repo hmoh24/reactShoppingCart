@@ -13,9 +13,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       {
-        path: "products",
-        loader: async () => {
-          return { productsFetch: await productsLoader() };
+        path: "products/:pageNumber",
+        loader: async ({ params }) => {
+          return { productsFetch: await productsLoader(params.pageNumber) };
         },
         Component: Products,
       },

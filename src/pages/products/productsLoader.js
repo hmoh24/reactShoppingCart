@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const productsLoader = async () => {
+const productsLoader = async (pageNumber) => {
   try {
     console.log("Products Loader - attempting post request");
     const response = await axios.get(
@@ -14,28 +14,28 @@ const productsLoader = async () => {
     const paginatedObjectIds = new Map();
     for (let i = 0; i < limitObjectIDs.length; i++) {
       if (i % 12 === 0) {
-        paginatedObjectIds.set(i / 12, [limitObjectIDs[i]]);
+        paginatedObjectIds.set(i / 12 + 1, [limitObjectIDs[i]]);
         continue;
       }
-      let current = paginatedObjectIds.get(Math.trunc(i / 12));
+      let current = paginatedObjectIds.get(Math.trunc(i / 12) + 1);
       current.push(limitObjectIDs[i]);
-      paginatedObjectIds.set(Math.trunc(i / 12), current);
+      paginatedObjectIds.set(Math.trunc(i / 12) + 1, current);
     }
 
     console.log("Products Loader - object IDs");
     console.log(paginatedObjectIds);
 
-    //return first 'oage' of objects only
-    const firstPageData = [];
-    for (const id of paginatedObjectIds.get(0)) {
+    const currentPageData = [];
+    const currentPageObjectIDs = paginatedObjectIds.get(Number(pageNumber));
+    for (const id of currentPageObjectIDs) {
       const objectResponse = await axios.get(
         `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
       );
-      firstPageData.push(objectResponse.data);
+      currentPageData.push(objectResponse.data);
     }
-    console.log("Products Loader - first page data");
-    console.log(firstPageData);
-    return firstPageData;
+    console.log("Products Loader - current page data");
+    console.log(currentPageData);
+    return currentPageData;
   } catch (error) {
     console.log("Products loader error");
     console.error(error);
