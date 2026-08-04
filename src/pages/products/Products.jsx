@@ -4,23 +4,20 @@ import { useLoaderData } from "react-router";
 
 function Products() {
   const { productsFetch } = useLoaderData();
-
-  const buildImageURL = (identifier) => {
-    return `${productsFetch.config.iiif_url}/${identifier}/full/843,/0/default.jpg`;
-  };
+  console.log(productsFetch);
 
   return (
     <main className={styles.productsPage}>
       <h1>Products</h1>
       <section className={styles.productCardGrid}>
-        {productsFetch.data.map((arrayItem) => {
+        {productsFetch.map((arrayItem) => {
           return (
             <ProductCard
-              key={arrayItem.id}
+              key={arrayItem.objectID}
               cardInfo={{
                 title: arrayItem.title,
-                description: arrayItem.description,
-                imageURL: buildImageURL(arrayItem.image_id),
+                description: arrayItem.period,
+                imageURL: arrayItem.primaryImage,
               }}
             />
           );
