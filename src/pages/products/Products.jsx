@@ -16,6 +16,7 @@ function Products() {
             <ProductCard
               key={arrayItem.objectID}
               cardInfo={{
+                id: arrayItem.objectID,
                 title: arrayItem.title,
                 description: arrayItem.period,
                 imageURL: arrayItem.primaryImage,
@@ -25,6 +26,7 @@ function Products() {
                   return [...prev, arrayItem];
                 })
               }
+              cartItems={cartItems}
             />
           );
         })}

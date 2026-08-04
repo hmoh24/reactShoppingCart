@@ -1,8 +1,23 @@
+import { useOutletContext } from "react-router";
 import CartItem from "../../components/cartItem/CartItem";
 import styles from "./Cart.module.css";
 
 function Cart() {
-  const cartItemsPlaceholder = new Array(6).fill(0);
+  const [cartItems] = useOutletContext();
+
+  const cartFrequencyCounter = new Map();
+  const uniqueCartItems = [];
+
+  for (const item of cartItems) {
+    const itemId = item.objectID;
+    const currentCount = cartFrequencyCounter.get(itemId) || 0;
+
+    cartFrequencyCounter.set(itemId, currentCount + 1);
+
+    if (currentCount === 0) {
+      uniqueCartItems.push(item);
+    }
+  }
 
   return (
     <main className={styles.cartPage}>
@@ -14,8 +29,16 @@ function Cart() {
           <h4>Quantity</h4>
           <h4>Total</h4>
         </section>
-        {cartItemsPlaceholder.map((arrayItem) => (
-          <CartItem />
+        {uniqueCartItems.map((arrayItem) => (
+          <CartItem
+            key={arrayItem.objectID}
+            itemDetails={{
+              name: arrayItem.objectName,
+              price: arrayItem.objectID,
+              imageUrl: arrayItem.primaryImageSmall,
+              amount: cartFrequencyCounter.get(arrayItem.objectID),
+            }}
+          />
         ))}
       </section>
       <section className={styles.checkoutSection}></section>
