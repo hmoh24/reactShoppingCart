@@ -3,7 +3,7 @@ import CartItem from "../../components/cartItem/CartItem";
 import styles from "./Cart.module.css";
 
 function Cart() {
-  const [cartItems] = useOutletContext();
+  const [cartItems, setCartItems] = useOutletContext();
 
   const cartFrequencyCounter = new Map();
   const uniqueCartItems = [];
@@ -34,9 +34,16 @@ function Cart() {
             key={arrayItem.objectID}
             itemDetails={{
               name: arrayItem.objectName,
+              id: arrayItem.objectID,
               price: arrayItem.objectID,
               imageUrl: arrayItem.primaryImageSmall,
               amount: cartFrequencyCounter.get(arrayItem.objectID),
+            }}
+            deleteFromCart={(id) => {
+              let arrayWithoutProduct = cartItems.filter(
+                (item) => id !== item.objectID,
+              );
+              setCartItems(arrayWithoutProduct);
             }}
           />
         ))}
