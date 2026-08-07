@@ -5,7 +5,9 @@ function ProductCard({ cardInfo, addToCart, cartItems, loadingState }) {
   return (
     <div className={styles.productCard}>
       {loadingState === "loading" ? (
-        "Loading"
+        <div className={styles.loadingState}>
+          <div className={styles.spinner} />
+        </div>
       ) : (
         <>
           <h2>{cardInfo.title}</h2>
