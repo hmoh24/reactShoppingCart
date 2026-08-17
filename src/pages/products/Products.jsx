@@ -34,6 +34,7 @@ function Products() {
                     title: arrayItem.title,
                     description: arrayItem.period,
                     imageURL: arrayItem.primaryImage,
+                    imageAltText: `${arrayItem.title} by ${arrayItem.artistDisplayName}`,
                   }}
                   addToCart={() =>
                     setCartItems((prev) => {

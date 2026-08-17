@@ -13,7 +13,7 @@ function ProductCard({ cardInfo, addToCart, cartItems, loadingState }) {
           <h2>{cardInfo.title}</h2>
           <img
             src={cardInfo.imageURL}
-            alt=""
+            alt={cardInfo.imageAltText}
             className={styles.productCardImg}
           />
           <p>{stripHtml(cardInfo.description)}</p>
