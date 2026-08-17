@@ -1,27 +1,27 @@
-import { useRouteError, isRouteErrorResponse } from "react-router";
+import { useRouteError } from "react-router";
+import styles from "./RootErrorBoundary.module.css";
 
 export default function RootErrorBoundary() {
-  let error = useRouteError();
-  console.log(error);
-  if (isRouteErrorResponse(error)) {
-    return (
-      <>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
-        <p>{error.data}</p>
-      </>
-    );
-  } else if (error instanceof Error) {
-    return (
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
-        <p>The stack trace is:</p>
-        <pre>{error.stack}</pre>
-      </div>
-    );
-  } else {
-    return <h1>Unknown Error</h1>;
-  }
+  const error = useRouteError();
+
+  console.error("An unexpected route error occurred:", error);
+
+  return (
+    <main className={styles.errorPage}>
+      <section className={styles.errorContent}>
+        <p className={styles.eyebrow}>Something went wrong</p>
+        <h1>We couldn&rsquo;t load this page.</h1>
+        <p className={styles.message}>
+          Please reload the application and try again.
+        </p>
+        <button
+          className={styles.reloadButton}
+          type="button"
+          onClick={() => window.location.reload()}
+        >
+          Reload application
+        </button>
+      </section>
+    </main>
+  );
 }
