@@ -2,16 +2,19 @@ import styles from "./CartItem.module.css";
 import {
   deleteProductFromCart,
   calcAmountPerProduct,
+  changeWithButtonDraftAmount,
+  onDraftChange,
 } from "../../util/cartItemCalculations";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
+import { useState } from "react";
 
 function CartItem({ itemDetails, setCartItems, cartItems }) {
-  const changeProductAmountInCart = (amount) => {
-    let index = cartItems.findIndex(
-      (arrayItem) => arrayItem[0].id === itemDetails.id,
-    );
+  const [inputDraft, setInputDraft] = useState(
+    calcAmountPerProduct(cartItems, itemDetails.id),
+  );
 
+  const changeProductAmountInCart = (amount) => {
     setCartItems((prev) => {
       const mapped = prev.map((item) => {
         if (item[0].id === itemDetails.id) {
@@ -29,8 +32,7 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
     });
   };
 
-  const onInputTextChange = (event) => {
-    const inputNumber = event.target.value;
+  const onInputTextChange = (inputNumber) => {
     const desiredNumber =
       inputNumber - calcAmountPerProduct(cartItems, itemDetails.id);
     changeProductAmountInCart(desiredNumber);
@@ -52,8 +54,50 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
       <p className={styles.cartItemCost}>{itemDetails.price}</p>
       <input
         type="number"
-        value={calcAmountPerProduct(cartItems, itemDetails.id)}
-        onChange={(e) => onInputTextChange(e)}
+        value={inputDraft}
+        onChange={(event) => onDraftChange(event, setInputDraft)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            if (event.target.value !== "") {
+              const validInput = limit(
+                event.target.value,
+                MIN_CART_QUANTITY,
+                MAX_CART_QUANTITY,
+              );
+              onInputTextChange(validInput);
+              setInputDraft(validInput);
+              event.currentTarget.blur();
+            } else {
+              const revertedValue = calcAmountPerProduct(
+                cartItems,
+                productData.id,
+              );
+              event.target.value = revertedValue;
+              setInputDraft(revertedValue);
+              event.currentTarget.blur();
+            }
+          }
+        }}
+        onBlur={(event) => {
+          if (event.target.value !== "") {
+            const validInput = limit(
+              event.target.value,
+              MIN_CART_QUANTITY,
+              MAX_CART_QUANTITY,
+            );
+            onInputTextChange(validInput);
+            setInputDraft(validInput);
+            event.currentTarget.blur();
+          } else {
+            const revertedValue = calcAmountPerProduct(
+              cartItems,
+              itemDetails.id,
+            );
+            event.target.value = revertedValue;
+            setInputDraft(revertedValue);
+            event.currentTarget.blur();
+          }
+        }}
         className={styles.cartItemInput}
         min={MIN_CART_QUANTITY}
         max={MAX_CART_QUANTITY}

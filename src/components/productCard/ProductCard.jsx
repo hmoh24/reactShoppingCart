@@ -2,17 +2,18 @@ import styles from "./ProductCard.module.css";
 import stripHtml from "../../util/stripHTML";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
-import { calcAmountPerProduct } from "../../util/cartItemCalculations";
+import {
+  calcAmountPerProduct,
+  changeWithButtonDraftAmount,
+  onDraftChange,
+} from "../../util/cartItemCalculations";
+import { useState } from "react";
 
 function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
   //create a draft state, then only when draft state becomes a number do we update the cart state
-
-  // const calcAmountPerProduct = () => {
-  //   let cartItem = cartItems.find((arrayItem) => {
-  //     return arrayItem[0].id === productData.id;
-  //   });
-  //   return cartItem === undefined ? 0 : cartItem[1];
-  // };
+  const [inputDraft, setInputDraft] = useState(
+    calcAmountPerProduct(cartItems, productData.id),
+  );
 
   const isProductDataInCart = () => {
     let filtered = cartItems.filter((arrayItem) => {
@@ -28,16 +29,12 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
   };
 
   const changeProductAmountInCart = (amount) => {
-    let index = cartItems.findIndex(
-      (arrayItem) => arrayItem[0].id === productData.id,
-    );
-
     setCartItems((prev) => {
       const mapped = prev.map((item) => {
         if (item[0].id === productData.id) {
           let copy = [...item];
           copy[1] = limit(
-            (copy[1] += amount),
+            copy[1] + amount,
             MIN_CART_QUANTITY,
             MAX_CART_QUANTITY,
           );
@@ -49,8 +46,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
     });
   };
 
-  const onInputTextChange = (event) => {
-    const inputNumber = event.target.value;
+  const onInputTextChange = (inputNumber) => {
     const desiredNumber =
       inputNumber - calcAmountPerProduct(cartItems, productData.id);
     changeProductAmountInCart(desiredNumber);
@@ -78,6 +74,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   isProductDataInCart()
                     ? changeProductAmountInCart(1)
                     : addNewProductToCart();
+                  changeWithButtonDraftAmount(1, inputDraft, setInputDraft);
                 }}
               >
                 Add to Cart
@@ -88,14 +85,57 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   type="button"
                   onClick={() => {
                     changeProductAmountInCart(-1);
+                    changeWithButtonDraftAmount(-1, inputDraft, setInputDraft);
                   }}
                 >
                   -
                 </button>
                 <input
                   type="number"
-                  value={calcAmountPerProduct(cartItems, productData.id)}
-                  onChange={(e) => onInputTextChange(e)}
+                  value={inputDraft}
+                  onChange={(event) => onDraftChange(event, setInputDraft)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                      if (event.target.value !== "") {
+                        const validInput = limit(
+                          event.target.value,
+                          MIN_CART_QUANTITY,
+                          MAX_CART_QUANTITY,
+                        );
+                        onInputTextChange(validInput);
+                        setInputDraft(validInput);
+                        event.currentTarget.blur();
+                      } else {
+                        const revertedValue = calcAmountPerProduct(
+                          cartItems,
+                          productData.id,
+                        );
+                        event.target.value = revertedValue;
+                        setInputDraft(revertedValue);
+                        event.currentTarget.blur();
+                      }
+                    }
+                  }}
+                  onBlur={(event) => {
+                    if (event.target.value !== "") {
+                      const validInput = limit(
+                        event.target.value,
+                        MIN_CART_QUANTITY,
+                        MAX_CART_QUANTITY,
+                      );
+                      onInputTextChange(validInput);
+                      setInputDraft(validInput);
+                      event.currentTarget.blur();
+                    } else {
+                      const revertedValue = calcAmountPerProduct(
+                        cartItems,
+                        productData.id,
+                      );
+                      event.target.value = revertedValue;
+                      setInputDraft(revertedValue);
+                      event.currentTarget.blur();
+                    }
+                  }}
                   min={MIN_CART_QUANTITY}
                   max={MAX_CART_QUANTITY}
                 />
@@ -103,6 +143,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   type="button"
                   onClick={() => {
                     changeProductAmountInCart(1);
+                    changeWithButtonDraftAmount(1, inputDraft, setInputDraft);
                   }}
                 >
                   +
