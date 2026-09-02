@@ -5,18 +5,21 @@ import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import LoadingBanner from "./components/loadingBanner/LoadingBanner";
+import { sumAllCartItems } from "./util/cartItemCalculations";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const navigation = useNavigation();
   const location = useLocation();
 
+  const cartItemsCount = sumAllCartItems(cartItems);
+
   const showLoadingBanner =
     navigation.state === "loading" && !location.pathname.includes("products");
 
   return (
     <div className="appShell">
-      <Navbar cartItemAmount={cartItems.length} />
+      <Navbar cartItemAmount={cartItemsCount} />
       {showLoadingBanner && <LoadingBanner />}
       <Outlet context={[cartItems, setCartItems]} />
       <Footer />

@@ -4,20 +4,8 @@ import styles from "./Cart.module.css";
 
 function Cart() {
   const [cartItems, setCartItems] = useOutletContext();
-
-  const cartFrequencyCounter = new Map();
-  const uniqueCartItems = [];
-
-  for (const item of cartItems) {
-    const itemId = item.objectID;
-    const currentCount = cartFrequencyCounter.get(itemId) || 0;
-
-    cartFrequencyCounter.set(itemId, currentCount + 1);
-
-    if (currentCount === 0) {
-      uniqueCartItems.push(item);
-    }
-  }
+  const nonEmptyCartItems = cartItems.filter((arrayItem) => arrayItem[1] !== 0);
+  console.log("cart items: ", cartItems);
 
   return (
     <main className={styles.cartPage}>
@@ -29,22 +17,18 @@ function Cart() {
           <h4>Quantity</h4>
           <h4>Total</h4>
         </section>
-        {uniqueCartItems.map((arrayItem) => (
+        {nonEmptyCartItems.map((arrayItem) => (
           <CartItem
-            key={arrayItem.objectID}
+            key={arrayItem[0].id}
             itemDetails={{
-              name: arrayItem.objectName,
-              id: arrayItem.objectID,
-              price: arrayItem.objectID,
-              imageUrl: arrayItem.primaryImageSmall,
-              amount: cartFrequencyCounter.get(arrayItem.objectID),
+              name: arrayItem[0].title,
+              id: arrayItem[0].id,
+              price: arrayItem[0].id,
+              imageUrl: arrayItem[0].imageURL,
+              amount: arrayItem[1],
             }}
-            deleteFromCart={(id) => {
-              let arrayWithoutProduct = cartItems.filter(
-                (item) => id !== item.objectID,
-              );
-              setCartItems(arrayWithoutProduct);
-            }}
+            setCartItems={setCartItems}
+            cartItems={cartItems}
           />
         ))}
       </section>
