@@ -29,18 +29,14 @@ function Products() {
               return (
                 <ProductCard
                   key={arrayItem.objectID}
-                  cardInfo={{
+                  productData={{
                     id: arrayItem.objectID,
                     title: arrayItem.title,
                     description: arrayItem.period,
                     imageURL: arrayItem.primaryImage,
                     imageAltText: `${arrayItem.title} by ${arrayItem.artistDisplayName}`,
                   }}
-                  addToCart={() =>
-                    setCartItems((prev) => {
-                      return [...prev, arrayItem];
-                    })
-                  }
+                  setCartItems={setCartItems}
                   cartItems={cartItems}
                 />
               );
