@@ -20,7 +20,7 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
         if (item[0].id === itemDetails.id) {
           let copy = [...item];
           copy[1] = limit(
-            (copy[1] += amount),
+            copy[1] + amount,
             MIN_CART_QUANTITY,
             MAX_CART_QUANTITY,
           );
@@ -58,24 +58,7 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
         onChange={(event) => onDraftChange(event, setInputDraft)}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            if (event.target.value !== "") {
-              const validInput = limit(
-                event.target.value,
-                MIN_CART_QUANTITY,
-                MAX_CART_QUANTITY,
-              );
-              onInputTextChange(validInput);
-              setInputDraft(validInput);
-              event.currentTarget.blur();
-            } else {
-              const revertedValue = calcAmountPerProduct(
-                cartItems,
-                productData.id,
-              );
-              event.target.value = revertedValue;
-              setInputDraft(revertedValue);
-              event.currentTarget.blur();
-            }
+            event.currentTarget.blur();
           }
         }}
         onBlur={(event) => {
@@ -87,7 +70,6 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
             );
             onInputTextChange(validInput);
             setInputDraft(validInput);
-            event.currentTarget.blur();
           } else {
             const revertedValue = calcAmountPerProduct(
               cartItems,
@@ -95,7 +77,6 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
             );
             event.target.value = revertedValue;
             setInputDraft(revertedValue);
-            event.currentTarget.blur();
           }
         }}
         className={styles.cartItemInput}

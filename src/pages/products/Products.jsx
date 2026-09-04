@@ -15,7 +15,6 @@ function Products() {
   const navigation = useNavigation();
   const loadingState = navigation.state;
   const placeholder = new Array(12).fill(0);
-  console.log(loadingState);
 
   return (
     <main className={styles.productsPage}>

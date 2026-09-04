@@ -96,24 +96,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   onChange={(event) => onDraftChange(event, setInputDraft)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
-                      if (event.target.value !== "") {
-                        const validInput = limit(
-                          event.target.value,
-                          MIN_CART_QUANTITY,
-                          MAX_CART_QUANTITY,
-                        );
-                        onInputTextChange(validInput);
-                        setInputDraft(validInput);
-                        event.currentTarget.blur();
-                      } else {
-                        const revertedValue = calcAmountPerProduct(
-                          cartItems,
-                          productData.id,
-                        );
-                        event.target.value = revertedValue;
-                        setInputDraft(revertedValue);
-                        event.currentTarget.blur();
-                      }
+                      event.currentTarget.blur();
                     }
                   }}
                   onBlur={(event) => {
@@ -125,7 +108,6 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                       );
                       onInputTextChange(validInput);
                       setInputDraft(validInput);
-                      event.currentTarget.blur();
                     } else {
                       const revertedValue = calcAmountPerProduct(
                         cartItems,
@@ -133,7 +115,6 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                       );
                       event.target.value = revertedValue;
                       setInputDraft(revertedValue);
-                      event.currentTarget.blur();
                     }
                   }}
                   min={MIN_CART_QUANTITY}
