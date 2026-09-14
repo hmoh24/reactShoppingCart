@@ -7,6 +7,7 @@ import {
   useOutletContext,
   useNavigation,
 } from "react-router";
+import ProductCardPlaceholder from "../../components/productCard/ProductCardPlaceholder";
 
 function Products() {
   const params = useParams();
@@ -22,7 +23,7 @@ function Products() {
       <section className={styles.productCardGrid}>
         {loadingState === "loading"
           ? placeholder.map((arrayItem, index) => {
-              return <ProductCard key={index} loadingState={loadingState} />;
+              return <ProductCardPlaceholder />;
             })
           : productsFetch.map((arrayItem) => {
               return (
