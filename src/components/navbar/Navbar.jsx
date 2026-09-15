@@ -25,11 +25,8 @@ function Navbar({ cartItemAmount }) {
         </li>
         <li>
           <NavLink to="/cart" end>
-            Cart
+            Cart ({cartItemAmount})
           </NavLink>
-        </li>
-        <li>
-          <ul>Cart Items: {cartItemAmount}</ul>
         </li>
       </ul>
     </nav>
