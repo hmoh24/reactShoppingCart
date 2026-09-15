@@ -2,7 +2,7 @@
   padding: 40px 50px;
   display: grid;
   grid-template-rows: auto 1fr;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 2fr 1fr;
   gap: 32px;
 }
 
@@ -20,11 +20,11 @@
 
 .cartItemGridHeader{
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr ;
+  grid-template-columns: 4fr 1fr 1fr ;
 
 }
 
 .checkoutSection {
-  background-color: black;
+  background-color: rgb(208, 208, 208);
   height: 400px;
 }

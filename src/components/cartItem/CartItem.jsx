@@ -83,9 +83,6 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
         min={MIN_CART_QUANTITY}
         max={MAX_CART_QUANTITY}
       />
-      <p className={styles.cartItemTotal}>
-        {itemDetails.price * itemDetails.amount}
-      </p>
     </div>
   );
 }
