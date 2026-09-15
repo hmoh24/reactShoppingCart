@@ -25,16 +25,21 @@ const productsLoader = async (pageNumber) => {
     console.log("Products Loader - object IDs");
     console.log(paginatedObjectIds);
 
-    const currentPageData = [];
+    const currentPageObjects = [];
     const currentPageObjectIDs = paginatedObjectIds.get(Number(pageNumber));
     for (const id of currentPageObjectIDs) {
       const objectResponse = await axios.get(
         `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
       );
-      currentPageData.push(objectResponse.data);
+      currentPageObjects.push(objectResponse.data);
     }
+    const currentPageData = {
+      productData: currentPageObjects,
+      pageTotal: paginatedObjectIds.size,
+    };
     console.log("Products Loader - current page data");
     console.log(currentPageData);
+
     return currentPageData;
   } catch (error) {
     console.log("Products loader error");

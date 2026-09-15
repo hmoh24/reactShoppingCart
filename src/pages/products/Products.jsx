@@ -20,12 +20,13 @@ function Products() {
   return (
     <main className={styles.productsPage}>
       <h1>Products</h1>
+      <p>{`Page ${params.pageNumber} of ${productsFetch.pageTotal}`}</p>
       <section className={styles.productCardGrid}>
         {loadingState === "loading"
           ? placeholder.map((arrayItem, index) => {
               return <ProductCardPlaceholder />;
             })
-          : productsFetch.map((arrayItem) => {
+          : productsFetch.productData.map((arrayItem) => {
               return (
                 <ProductCard
                   key={arrayItem.objectID}
