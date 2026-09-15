@@ -1,10 +1,17 @@
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router";
+import logo from "../../assets/floating-archive-logo-v3.png";
 
 function Navbar({ cartItemAmount }) {
   return (
     <nav className={styles.navbar} role="navigation">
-      <p>Logo</p>
+      <NavLink to="/" end>
+        <img
+          className={styles.logo}
+          src={logo}
+          alt="The Floating Archive home"
+        />
+      </NavLink>
       <ul className={styles.navLinks}>
         <li>
           <NavLink to="/" end>

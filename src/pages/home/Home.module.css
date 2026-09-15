@@ -7,7 +7,7 @@
 }
 
 .hero {
-  background-image: url(../../assets/alex-folguera-9EfG4t9vfvc-unsplash.jpg);
+  background-image: url(../../assets/hero.jpg);
   background-size: cover;
   min-height: 90vh;
 }
@@ -20,12 +20,45 @@
   color: var(--color-secondary);
 }
 
+.heroButton {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-secondary);
+  color: var(--color-secondary);
+  text-decoration: none;
+}
+
+.heroButton:hover {
+  background: var(--color-secondary);
+  color: var(--color-primary);
+}
+
+.heroButton:focus-visible {
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+
 .about {
   background: var(--color-secondary);
 }
 
-.popular {
+.contentRow {
+  display: flex;
+  flex-direction: row;
+}
+
+.sectionImageContainer {
+  width: 33.333%;
+  height: 20px;
+  border: 1px solid black;
+}
+
+.japaneseArt {
   background: var(--color-muted);
+}
+
+.popular {
+  background: var(--color-secondary);
 }
 
 .sectionTitle {
@@ -35,4 +68,35 @@
 
 .contentText {
   color: var(--color-primary);
+}
+
+.carousel {
+  position: relative;
+  border: 1px solid red;
+  height: 400px;
+  width: max-content;
+}
+
+.carouselImage {
+  height: 100%;
+  object-fit: contain;
+}
+
+.carouselTitle {
+  position: absolute;
+  font-size: 20px;
+}
+
+.carouselButton {
+  position: absolute;
+}
+
+.carouselButton:nth-of-type(1){
+  right: 0;
+  bottom: 0;
+}
+
+.carouselButton:nth-of-type(2) {
+  left: 0;
+  bottom: 0;
 }
