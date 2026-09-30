@@ -9,7 +9,7 @@ function Navbar({ cartItemAmount }) {
         <img
           className={styles.logo}
           src={logo}
-          alt="The Floating Archive home"
+          alt="The Floating Archive logo"
         />
       </NavLink>
       <ul className={styles.navLinks}>
