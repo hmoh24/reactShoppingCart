@@ -1,11 +1,11 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Outlet, useLocation, useNavigation } from "react-router";
 import "./App.css";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import LoadingBanner from "./components/loadingBanner/LoadingBanner";
-import { sumAllCartItems } from "./util/cartItemCalculations";
+import { sumAllCartItems } from "./util/cartCalculations";
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -28,3 +28,4 @@ function App() {
 }
 
 export default App;
+

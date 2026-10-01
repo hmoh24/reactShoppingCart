@@ -1,10 +1,8 @@
-import styles from "./CartItem.module.css";
+﻿import styles from "./CartItem.module.css";
 import {
   deleteProductFromCart,
   calcAmountPerProduct,
-  changeWithButtonDraftAmount,
-  onDraftChange,
-} from "../../util/cartItemCalculations";
+} from "../../util/cartCalculations";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
 import { useState } from "react";
@@ -45,7 +43,9 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
         <div className="cartItemText">
           <h3 className={styles.cartItemName}>{itemDetails.name}</h3>
           <button
-            onClick={() => deleteProductFromCart(setCartItems, itemDetails.id)}
+            onClick={() =>
+              setCartItems(deleteProductFromCart(setCartItems, itemDetails.id))
+            }
           >
             Delete
           </button>
@@ -55,7 +55,7 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
       <input
         type="number"
         value={inputDraft}
-        onChange={(event) => onDraftChange(event, setInputDraft)}
+        onChange={(event) => setInputDraft(event.target.value)}
         onKeyDown={(event) => {
           if (event.key === "Enter") {
             event.currentTarget.blur();

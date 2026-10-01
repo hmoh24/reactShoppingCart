@@ -1,12 +1,9 @@
-import styles from "./ProductCard.module.css";
+﻿import styles from "./ProductCard.module.css";
 import stripHtml from "../../util/stripHTML";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
-import {
-  calcAmountPerProduct,
-  changeWithButtonDraftAmount,
-  onDraftChange,
-} from "../../util/cartItemCalculations";
+import { calcAmountPerProduct } from "../../util/cartCalculations";
+import { changeWithButtonDraftAmount } from "../../util/quantityCalculations";
 import { useState } from "react";
 
 function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
@@ -74,7 +71,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   isProductDataInCart()
                     ? changeProductAmountInCart(1)
                     : addNewProductToCart();
-                  changeWithButtonDraftAmount(1, inputDraft, setInputDraft);
+                  setInputDraft(changeWithButtonDraftAmount(1, inputDraft));
                 }}
               >
                 Add to Cart
@@ -85,7 +82,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   type="button"
                   onClick={() => {
                     changeProductAmountInCart(-1);
-                    changeWithButtonDraftAmount(-1, inputDraft, setInputDraft);
+                    setInputDraft(changeWithButtonDraftAmount(-1, inputDraft));
                   }}
                 >
                   -
@@ -93,7 +90,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                 <input
                   type="number"
                   value={inputDraft}
-                  onChange={(event) => onDraftChange(event, setInputDraft)}
+                  onChange={(event) => setInputDraft(event.target.value)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter") {
                       event.currentTarget.blur();
@@ -124,7 +121,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                   type="button"
                   onClick={() => {
                     changeProductAmountInCart(1);
-                    changeWithButtonDraftAmount(1, inputDraft, setInputDraft);
+                    setInputDraft(changeWithButtonDraftAmount(1, inputDraft));
                   }}
                 >
                   +
@@ -139,3 +136,5 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
 }
 
 export default ProductCard;
+
+

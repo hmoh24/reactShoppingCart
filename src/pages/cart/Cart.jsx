@@ -1,7 +1,7 @@
-import { useOutletContext } from "react-router";
+﻿import { useOutletContext } from "react-router";
 import CartItem from "../../components/cartItem/CartItem";
 import styles from "./Cart.module.css";
-import { sumAllCartItems } from "../../util/cartItemCalculations";
+import { sumAllCartItems } from "../../util/cartCalculations";
 
 function Cart() {
   const [cartItems, setCartItems] = useOutletContext();
@@ -49,19 +49,19 @@ function Cart() {
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Subtotal</p>
-            <p>£{totalCost}</p>
+            <p>Â£{totalCost}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Taxes</p>
-            <p>£{taxCost}</p>
+            <p>Â£{taxCost}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Discount</p>
-            <p>−£{0.0}</p>
+            <p>âˆ’Â£{0.0}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Final payment</p>
-            <p>£{finalTotal}</p>
+            <p>Â£{finalTotal}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <input
@@ -80,3 +80,4 @@ function Cart() {
 }
 
 export default Cart;
+
