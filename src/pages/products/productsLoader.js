@@ -4,7 +4,7 @@ const productsLoader = async (pageNumber) => {
   try {
     console.log("Products Loader - attempting post request");
     const response = await axios.get(
-      "https://collectionapi.metmuseum.org/public/collection/v1/search?departmentId=6&hasImages=true&q=ukiyo-e",
+      "https://collectionapi.metmuseum.org/public/collection/v1.1/search?departmentId=6&hasImages=true&q=ukiyo-e&offset=0&limit=100",
     );
     const data = await response.data;
     //Max 100 objects shown
