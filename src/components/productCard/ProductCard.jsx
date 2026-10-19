@@ -2,7 +2,12 @@
 import stripHtml from "../../util/stripHTML";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
-import { calcAmountPerProduct } from "../../util/cartCalculations";
+import {
+  calcAmountPerProduct,
+  changeProductAmountInCart,
+  isProductInCart,
+  addProductToCart,
+} from "../../util/cartCalculations";
 import { changeWithButtonDraftAmount } from "../../util/quantityCalculations";
 import { useState } from "react";
 
@@ -12,41 +17,16 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
     calcAmountPerProduct(cartItems, productData.id),
   );
 
-  const isProductDataInCart = () => {
-    let filtered = cartItems.filter((arrayItem) => {
-      return arrayItem[0].id === productData.id;
-    });
-    return filtered.length ? true : false;
-  };
-
-  const addNewProductToCart = () => {
-    setCartItems((prev) => {
-      return [...prev, [productData, 1]];
-    });
-  };
-
-  const changeProductAmountInCart = (amount) => {
-    setCartItems((prev) => {
-      const mapped = prev.map((item) => {
-        if (item[0].id === productData.id) {
-          let copy = [...item];
-          copy[1] = limit(
-            copy[1] + amount,
-            MIN_CART_QUANTITY,
-            MAX_CART_QUANTITY,
-          );
-          return copy;
-        }
-        return item;
-      });
-      return mapped;
-    });
+  const handleQuantityChange = (amount) => {
+    setCartItems((prev) =>
+      changeProductAmountInCart(prev, productData.id, amount),
+    );
   };
 
   const onInputTextChange = (inputNumber) => {
     const desiredNumber =
       inputNumber - calcAmountPerProduct(cartItems, productData.id);
-    changeProductAmountInCart(desiredNumber);
+    handleQuantityChange(desiredNumber);
   };
 
   return (
@@ -68,9 +48,11 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
             {calcAmountPerProduct(cartItems, productData.id) === 0 ? (
               <button
                 onClick={() => {
-                  isProductDataInCart()
-                    ? changeProductAmountInCart(1)
-                    : addNewProductToCart();
+                  isProductInCart(cartItems, productData.id)
+                    ? handleQuantityChange(1)
+                    : setCartItems((prev) =>
+                        addProductToCart(prev, productData),
+                      );
                   setInputDraft(changeWithButtonDraftAmount(1, inputDraft));
                 }}
               >
@@ -81,13 +63,14 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                 <button
                   type="button"
                   onClick={() => {
-                    changeProductAmountInCart(-1);
+                    handleQuantityChange(-1);
                     setInputDraft(changeWithButtonDraftAmount(-1, inputDraft));
                   }}
                 >
                   -
                 </button>
                 <input
+                  aria-label="Quantity"
                   type="number"
                   value={inputDraft}
                   onChange={(event) => setInputDraft(event.target.value)}
@@ -120,7 +103,7 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
                 <button
                   type="button"
                   onClick={() => {
-                    changeProductAmountInCart(1);
+                    handleQuantityChange(1);
                     setInputDraft(changeWithButtonDraftAmount(1, inputDraft));
                   }}
                 >
@@ -136,5 +119,3 @@ function ProductCard({ productData, setCartItems, cartItems, loadingState }) {
 }
 
 export default ProductCard;
-
-

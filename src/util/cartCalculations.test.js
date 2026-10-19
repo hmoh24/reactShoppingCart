@@ -1,9 +1,13 @@
-import { beforeAll, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   sumAllCartItems,
   calcAmountPerProduct,
+  isProductInCart,
+  addProductToCart,
+  changeProductAmountInCart,
   deleteProductFromCart,
 } from "./cartCalculations";
+import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../constants/cart";
 
 describe("Util - Cart Calculations", () => {
   let cartItems = [
@@ -130,6 +134,83 @@ describe("Util - Cart Calculations", () => {
     it("correctly returns 0 for existing product with 0 quantity", () => {
       const quantity = calcAmountPerProduct(cartItemsWithNoQuantity, 789144);
       expect(quantity).toBe(0);
+    });
+  });
+
+  describe("isProductInCart", () => {
+    it("correctly returns false for non-existent product IDs", () => {
+      const productA = isProductInCart(cartItems, 7891442);
+      expect(productA).toBe(false);
+    });
+    it("correctly returns true for existing product IDs", () => {
+      const productA = isProductInCart(cartItems, 789144);
+      expect(productA).toBe(true);
+    });
+    it("correctly returns true for existing product with 0 quantity", () => {
+      const productA = isProductInCart(cartItemsWithNoQuantity, 789144);
+      expect(productA).toBe(true);
+    });
+  });
+
+  describe("addProductToCart", () => {
+    it("correctly adds product to empty cart with quantity 1", () => {
+      const productData = { id: 789149 };
+      const updatedCart = addProductToCart(emptyCart, productData);
+      expect(updatedCart).toEqual([[productData, 1]]);
+    });
+    it("correctly adds product without changing existing items", () => {
+      const productData = { id: 789149 };
+      const updatedCart = addProductToCart(cartItems, productData);
+      expect(updatedCart).toEqual([...cartItems, [productData, 1]]);
+    });
+    it("correctly leaves original cart array unchanged", () => {
+      let originalCartItems = [...cartItems];
+      const productData = { id: 789149 };
+      const updatedCart = addProductToCart(cartItems, productData);
+      expect(cartItems).toEqual(originalCartItems);
+      expect(updatedCart).not.toBe(cartItems);
+    });
+  });
+
+  describe("changeProductAmountInCart", () => {
+    it("correctly increases quantity for matching product", () => {
+      const updatedCart = changeProductAmountInCart(cartItems, 789144, 1);
+      expect(updatedCart).toEqual([
+        [cartItems[0][0], 4],
+        cartItems[1],
+        cartItems[2],
+      ]);
+    });
+    it("correctly decreases quantity for matching product", () => {
+      const updatedCart = changeProductAmountInCart(cartItems, 789144, -1);
+      expect(updatedCart[0][1]).toBe(2);
+    });
+    it("correctly limits quantity to maximum", () => {
+      const updatedCart = changeProductAmountInCart(
+        cartItems,
+        789144,
+        MAX_CART_QUANTITY,
+      );
+      expect(updatedCart[0][1]).toBe(MAX_CART_QUANTITY);
+    });
+    it("correctly limits quantity to minimum", () => {
+      const updatedCart = changeProductAmountInCart(cartItems, 789144, -10);
+      expect(updatedCart[0][1]).toBe(MIN_CART_QUANTITY);
+    });
+    it("correctly leaves items unchanged for non-existent product IDs", () => {
+      const updatedCart = changeProductAmountInCart(cartItems, 7891442, 1);
+      expect(updatedCart).toEqual(cartItems);
+    });
+    it("correctly handles empty cart array", () => {
+      const updatedCart = changeProductAmountInCart(emptyCart, 789144, 1);
+      expect(updatedCart).toEqual([]);
+    });
+    it("correctly leaves original cart array and quantities unchanged", () => {
+      let originalCartItems = cartItems.map((item) => [...item]);
+      const updatedCart = changeProductAmountInCart(cartItems, 789144, 1);
+      expect(cartItems).toEqual(originalCartItems);
+      expect(updatedCart).not.toBe(cartItems);
+      expect(updatedCart[0]).not.toBe(cartItems[0]);
     });
   });
 

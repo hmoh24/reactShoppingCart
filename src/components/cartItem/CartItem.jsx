@@ -1,7 +1,8 @@
-﻿import styles from "./CartItem.module.css";
+import styles from "./CartItem.module.css";
 import {
   deleteProductFromCart,
   calcAmountPerProduct,
+  changeProductAmountInCart,
 } from "../../util/cartCalculations";
 import limit from "../../util/limit";
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from "../../constants/cart";
@@ -12,28 +13,16 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
     calcAmountPerProduct(cartItems, itemDetails.id),
   );
 
-  const changeProductAmountInCart = (amount) => {
-    setCartItems((prev) => {
-      const mapped = prev.map((item) => {
-        if (item[0].id === itemDetails.id) {
-          let copy = [...item];
-          copy[1] = limit(
-            copy[1] + amount,
-            MIN_CART_QUANTITY,
-            MAX_CART_QUANTITY,
-          );
-          return copy;
-        }
-        return item;
-      });
-      return mapped;
-    });
+  const handleQuantityChange = (amount) => {
+    setCartItems((prev) =>
+      changeProductAmountInCart(prev, itemDetails.id, amount),
+    );
   };
 
   const onInputTextChange = (inputNumber) => {
     const desiredNumber =
       inputNumber - calcAmountPerProduct(cartItems, itemDetails.id);
-    changeProductAmountInCart(desiredNumber);
+    handleQuantityChange(desiredNumber);
   };
 
   return (
