@@ -2,6 +2,9 @@ import { describe, expect, it } from "vitest";
 import {
   sumAllCartItems,
   calcAmountPerProduct,
+  calcTotalCost,
+  calcTaxCost,
+  calcFinalTotal,
   isProductInCart,
   addProductToCart,
   changeProductAmountInCart,
@@ -211,6 +214,68 @@ describe("Util - Cart Calculations", () => {
       expect(cartItems).toEqual(originalCartItems);
       expect(updatedCart).not.toBe(cartItems);
       expect(updatedCart[0]).not.toBe(cartItems[0]);
+    });
+  });
+
+  describe("calcTotalCost", () => {
+    it("correctly sums costs across multiple products and quantities", () => {
+      const cartItems = [
+        [{ id: 10 }, 3],
+        [{ id: 25 }, 2],
+      ];
+      const totalCost = calcTotalCost(cartItems);
+      expect(totalCost).toBe(80);
+    });
+    it("correctly calculates cost for a single product with multiple quantities", () => {
+      const cartItems = [[{ id: 15 }, 4]];
+      const totalCost = calcTotalCost(cartItems);
+      expect(totalCost).toBe(60);
+    });
+    it("correctly returns 0 for empty cart array", () => {
+      const totalCost = calcTotalCost(emptyCart);
+      expect(totalCost).toBe(0);
+    });
+    it("correctly ignores products with 0 quantity", () => {
+      const cartItems = [
+        [{ id: 10 }, 0],
+        [{ id: 25 }, 2],
+      ];
+      const totalCost = calcTotalCost(cartItems);
+      expect(totalCost).toBe(50);
+    });
+  });
+
+  describe("calcTaxCost", () => {
+    it("correctly calculates 20 percent tax", () => {
+      const taxCost = calcTaxCost(100);
+      expect(taxCost).toBe(20);
+    });
+    it("correctly rounds tax down to the nearest whole number", () => {
+      const taxCost = calcTaxCost(12);
+      expect(taxCost).toBe(2);
+    });
+    it("correctly rounds tax up to the nearest whole number", () => {
+      const taxCost = calcTaxCost(13);
+      expect(taxCost).toBe(3);
+    });
+    it("correctly returns 0 for zero total cost", () => {
+      const taxCost = calcTaxCost(0);
+      expect(taxCost).toBe(0);
+    });
+  });
+
+  describe("calcFinalTotal", () => {
+    it("correctly adds total cost and tax cost", () => {
+      const finalTotal = calcFinalTotal(100, 20);
+      expect(finalTotal).toBe(120);
+    });
+    it("correctly preserves total cost when tax cost is 0", () => {
+      const finalTotal = calcFinalTotal(2, 0);
+      expect(finalTotal).toBe(2);
+    });
+    it("correctly returns 0 when total cost and tax cost are 0", () => {
+      const finalTotal = calcFinalTotal(0, 0);
+      expect(finalTotal).toBe(0);
     });
   });
 

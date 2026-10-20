@@ -1,7 +1,12 @@
 ﻿import { useOutletContext } from "react-router";
 import CartItem from "../../components/cartItem/CartItem";
 import styles from "./Cart.module.css";
-import { sumAllCartItems } from "../../util/cartCalculations";
+import {
+  sumAllCartItems,
+  calcTotalCost,
+  calcTaxCost,
+  calcFinalTotal,
+} from "../../util/cartCalculations";
 
 function Cart() {
   const [cartItems, setCartItems] = useOutletContext();
@@ -9,12 +14,9 @@ function Cart() {
   console.log("cart items: ", cartItems);
 
   const totalItems = sumAllCartItems(cartItems);
-  const totalCost = cartItems.reduce(
-    (acc, curr) => acc + curr[1] * curr[0].id,
-    0,
-  );
-  const taxCost = Math.round(totalCost * 0.2);
-  const finalTotal = totalCost + taxCost;
+  const totalCost = calcTotalCost(cartItems);
+  const taxCost = calcTaxCost(totalCost);
+  const finalTotal = calcFinalTotal(totalCost, taxCost);
 
   return (
     <main className={styles.cartPage}>
@@ -25,7 +27,9 @@ function Cart() {
           <h4>Price</h4>
           <h4>Quantity</h4>
         </section>
-        {nonEmptyCartItems.map((arrayItem) => (
+        {nonEmptyCartItems.length === 0 ? (
+          <p>Your cart is empty</p>
+        ) : nonEmptyCartItems.map((arrayItem) => (
           <CartItem
             key={arrayItem[0].id}
             itemDetails={{
@@ -49,19 +53,19 @@ function Cart() {
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Subtotal</p>
-            <p>Â£{totalCost}</p>
+            <p>£{totalCost}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Taxes</p>
-            <p>Â£{taxCost}</p>
+            <p>£{taxCost}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Discount</p>
-            <p>âˆ’Â£{0.0}</p>
+            <p>£{0.0}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <p>Final payment</p>
-            <p>Â£{finalTotal}</p>
+            <p>£{finalTotal}</p>
           </div>
           <div className={styles.summaryDetailsRow}>
             <input
@@ -80,4 +84,3 @@ function Cart() {
 }
 
 export default Cart;
-

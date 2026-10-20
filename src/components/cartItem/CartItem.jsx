@@ -33,7 +33,7 @@ function CartItem({ itemDetails, setCartItems, cartItems }) {
           <h3 className={styles.cartItemName}>{itemDetails.name}</h3>
           <button
             onClick={() =>
-              setCartItems(deleteProductFromCart(setCartItems, itemDetails.id))
+              setCartItems(deleteProductFromCart(cartItems, itemDetails.id))
             }
           >
             Delete

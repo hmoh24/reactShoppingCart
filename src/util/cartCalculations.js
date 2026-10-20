@@ -15,6 +15,21 @@ export const calcAmountPerProduct = (cartItemArray, productID) => {
   return cartItem === undefined ? 0 : cartItem[1];
 };
 
+export const calcTotalCost = (cartItemArray) => {
+  return cartItemArray.reduce(
+    (acc, curr) => acc + curr[1] * curr[0].id,
+    0,
+  );
+};
+
+export const calcTaxCost = (totalCost) => {
+  return Math.round(totalCost * 0.2);
+};
+
+export const calcFinalTotal = (totalCost, taxCost) => {
+  return totalCost + taxCost;
+};
+
 export const isProductInCart = (cartItemArray, productID) => {
   return cartItemArray.some((item) => item[0].id === productID);
 };
