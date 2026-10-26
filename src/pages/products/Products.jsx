@@ -16,6 +16,7 @@ function Products() {
   const navigation = useNavigation();
   const loadingState = navigation.state;
   const placeholder = new Array(12).fill(0);
+  const currentPage = Number(params.pageNumber);
 
   return (
     <main className={styles.productsPage}>
@@ -45,18 +46,18 @@ function Products() {
       </section>
       <div className={styles.pageButtons}>
         <li>
-          <Link
-            to={`/products/${Number(params.pageNumber) - 1 > 0 ? Number(params.pageNumber) - 1 : 1}`}
-          >
-            Previous
-          </Link>
+          {currentPage <= 1 ? (
+            <span aria-disabled="true">Previous</span>
+          ) : (
+            <Link to={`/products/${currentPage - 1}`}>Previous</Link>
+          )}
         </li>
         <li>
-          <Link
-            to={`/products/${Number(params.pageNumber) + 1 < 13 ? Number(params.pageNumber) + 1 : 12}`}
-          >
-            Next
-          </Link>
+          {currentPage >= productsFetch.pageTotal ? (
+            <span aria-disabled="true">Next</span>
+          ) : (
+            <Link to={`/products/${currentPage + 1}`}>Next</Link>
+          )}
         </li>
       </div>
     </main>
